@@ -1,0 +1,20 @@
+# RAG-FastAPI dependencies
+fastapi>=0.95.0
+uvicorn>=0.22.0
+pydantic>=2.0.0
+httpx>=0.24.0
+
+# Vector database
+chromadb>=0.4.6
+
+# Embedding model
+sentence-transformers>=2.2.2
+
+# Document processing
+langchain>=0.0.267
+python-multipart>=0.0.6
+pypdf2>=3.0.0
+unstructured>=0.10.0
+
+# Note: pytorch is installed separately if needed
+# pip install torch torchvision torchaudio
