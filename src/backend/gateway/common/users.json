@@ -1,0 +1,20 @@
+{
+    "ragUser@gmail.com": {
+        "userid": "ragUser@gmail.com",
+        "username": "Rag",
+        "full_name": "Rag User",
+        "email": "ragUser@gmail.com",
+        "hashed_password": "$2b$12$XMT2KGR.3pBUszKSl91I6uJDWVZIncZMyqgXzH1KnWqZcPZ/k5pLu",
+		"_comment":"password is: 12345678",
+        "disabled": false
+	},
+	"56008507@outlook.com": {
+        "userid": "jackRag56008507@outlook.com",
+        "username": "Jack",
+        "full_name": "Jack Christopher",
+        "email": "jacRag@outlook.com",
+        "hashed_password": "$2b$12$WjyqXlyP/TCyysi0HwLWGenjP668dBswX39aKJzByZTlTDZ9kD.5e",
+		"_comment":"password is: 23456789",
+        "disabled": true
+	}
+}

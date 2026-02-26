@@ -1,0 +1,15 @@
+secret:   # should not use these keys;
+  aes_key: IlovehHometownOK  # 16, 24 or 32 bytes
+  aes_iv: sumiaIsMyLoveUhm  # 16 bytes
+  jwt_key: 09d25d094faa6ca2556c818155b7a9563b93f7099f6f0f4caa6cf63b88e8d1e7  # used to sign JWT tokens
+token: 
+  expires_time: 43200  #30 days, minutes, setting for "remember me" option
+  default_expires_time: 15  # 15 mimutes, default token expiration time
+origins:   # CORS - origins are allowed to access this server
+ - http://localhost
+ - http://localhost:3000
+ - http://127.0.0.1:3000
+services:   # service after gateway routing
+  translation: http://127.0.0.1:5002 # coming soon
+  consulting: http://127.0.0.1:5001
+time_out: 90    # seconds, service response timeout.

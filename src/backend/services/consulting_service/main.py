@@ -12,7 +12,6 @@ import httpx
 import uvicorn
 import asyncio
 import json
-import shutil
 from typing import List, Dict, Any, Optional, AsyncIterator, Union
 
 # Configuration for Ollama API
@@ -101,8 +100,16 @@ class StreamChunk(BaseModel):
 @app.post("/chat", response_model=ChatResponse)
 async def chat(request: ConsultingRequest):
     try:
+        # Check if the collection is initialized
+        if collection is None:
+            raise HTTPException(status_code=503, detail="Vector database is not initialized. Please check server logs.")
+
         # Check if the collection is empty
-        collection_count = collection.count()
+        try:
+            collection_count = collection.count()
+        except Exception as e:
+             raise HTTPException(status_code=500, detail=f"Error accessing vector database: {str(e)}")
+
         if collection_count == 0:
             raise HTTPException(status_code=400, detail="No documents found. Please upload a document first.")
 
@@ -181,6 +188,9 @@ async def chat(request: ConsultingRequest):
                         raise HTTPException(status_code=503, detail=f"Ollama service returned an error: {e.response.text}")
 
     except Exception as e:
+        print(f"Error processing request: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Error processing request: {str(e)}")
 
 
@@ -273,26 +283,10 @@ async def general_exception_handler(request, exc):
     )
 
 
-# Copy streaming-example.html to static directory on startup
-def copy_streaming_example():
-    src_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), 
-                          "frontend", "streaming-example.html")
-    dst_path = os.path.join("static", "streaming-example.html")
-    
-    if os.path.exists(src_path):
-        shutil.copy2(src_path, dst_path)
-        print(f"Copied streaming-example.html to {dst_path}")
-    else:
-        print(f"Warning: Could not find {src_path}")
+if __name__ == "__main__":
+    # Create files directory if it doesn't exist
+    os.makedirs("files", exist_ok=True)
 
-    
-    if __name__ == "__main__":
-        # Create files directory if it doesn't exist
-        os.makedirs("files", exist_ok=True)
-    
-    # Copy streaming example file
-        copy_streaming_example()
-    
     # Get port from environment variable or use default
     port = int(os.environ.get("PORT", 5001))
 
